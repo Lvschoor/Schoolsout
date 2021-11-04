@@ -70,11 +70,17 @@ public class Dashboard extends JFrame {
         courses.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                PersonDAO personDAO = new PersonDAO();
                 String courseName = String.valueOf(courses.getSelectedItem());
                 Course course = findByName(finalListOfCourses,courseName);
-                Person person = user.getPerson();
+                System.out.println("#################################################");
+                System.out.println(user);
+                System.out.println(user.getPerson());
+                System.out.println(user.getPerson().getId());
+                System.out.println("#################################################");
+
+                Person person = personDAO.getOne(user.getPerson().getId());
                 person.setCourse(course);
-                PersonDAO personDAO = new PersonDAO();
                 personDAO.updateOne(person);
                 confirmButton.setVisible(true);
 

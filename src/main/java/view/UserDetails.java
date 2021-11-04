@@ -72,7 +72,15 @@ public class UserDetails extends JFrame {
                 }
 
                 user.setPerson(person);
+
                 userDAO.updateOne(user);
+
+                System.out.println("#################################################");
+                System.out.println(user);
+                System.out.println(user.getPerson());
+                System.out.println(user.getPerson().getId());
+                System.out.println("#################################################");
+
                 userDetailsFrame.dispose();
                 new Dashboard(user);
             }

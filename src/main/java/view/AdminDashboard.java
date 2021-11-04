@@ -16,6 +16,7 @@ public class AdminDashboard extends JFrame{
     private JButton createExamButton;
     private JButton updateExamButton;
     private JButton logoutButton;
+    private JButton deleteUserButton;
     private JFrame adminDashboardFrame;
 
 
@@ -79,6 +80,13 @@ public class AdminDashboard extends JFrame{
             public void actionPerformed(ActionEvent actionEvent) {
                 adminDashboardFrame.dispose();
                 new UpdateExam(user);
+            }
+        });
+        deleteUserButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                adminDashboardFrame.dispose();
+                new DeleteUser(user);
             }
         });
     }

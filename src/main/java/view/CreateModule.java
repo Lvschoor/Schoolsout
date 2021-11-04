@@ -42,8 +42,6 @@ public class CreateModule extends JFrame {
         createModuleFrame.setVisible(true);
 
 
-
-
         java.util.List<Course> listOfCourses = new ArrayList<>();
         listOfCourses = courseDAO.getAll();
         for (Course courseFromList : listOfCourses) {
@@ -58,7 +56,6 @@ public class CreateModule extends JFrame {
                 course = findByName(finalListOfCourses, courseName);
 
 
-
             }
         });
 
@@ -68,7 +65,9 @@ public class CreateModule extends JFrame {
 
                 module.setName(moduleNameField.getText());
                 module.setDescription(moduleDescriptionField.getText());
-                module.setCourse(course);
+                if (course.getName() != null) {
+                    module.setCourse(course);
+                }
                 moduleDAO.updateOne(module);
 
                 JOptionPane.showMessageDialog(null, "New module created.");

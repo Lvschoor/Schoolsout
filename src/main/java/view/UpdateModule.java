@@ -28,8 +28,8 @@ public class UpdateModule extends JFrame {
     ModuleDAO moduleDAO = new ModuleDAO();
     Module module = new Module();
     Course course = new Course();
-    List<Course> listOfCourses = new ArrayList<>();
-    List<Module> listOfModules = new ArrayList<>();
+    List<Course> listOfCourses = new ArrayList();
+    List<Module> listOfModules = new ArrayList();
 
 
     public UpdateModule(User user) {
@@ -87,7 +87,9 @@ public class UpdateModule extends JFrame {
                 moduleToUpdate.setDescription((moduleDescriptionField.getText()));
                 String courseName = String.valueOf(courses.getSelectedItem());
                 Course course = findCourseByName(listOfCourses, courseName);
-                moduleToUpdate.setCourse(course);
+                if (course.getName() != null) {
+                    moduleToUpdate.setCourse(course);
+                }
                 JOptionPane.showMessageDialog(null, "Module updated.");
                 moduleDAO.updateOne(moduleToUpdate);
                 updateModuleFrame.dispose();
@@ -99,6 +101,7 @@ public class UpdateModule extends JFrame {
     public static Module findModuleByName(Collection<Module> modules, String name) {
         return modules.stream().filter(module -> name.equals(module.getName())).findFirst().orElse(null);
     }
+
     public static Course findCourseByName(Collection<Course> courses, String name) {
         return courses.stream().filter(course -> name.equals(course.getName())).findFirst().orElse(null);
     }

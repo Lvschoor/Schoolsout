@@ -36,7 +36,7 @@ public class UserDAO {
 
     public void deleteOne(User user) {
         EntityManager em = EMFClass.getEMFLuc().createEntityManager();
-        Exam userToDelete = em.find(Exam.class, user.getLogin());
+        User userToDelete = em.find(User.class, user.getLogin());
         em.getTransaction().begin();
         em.remove(userToDelete);
         em.getTransaction().commit();

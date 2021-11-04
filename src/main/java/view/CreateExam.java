@@ -5,28 +5,31 @@ import dao.ModuleDAO;
 import entities.Exam;
 import entities.Module;
 import entities.User;
+import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 
-public class CreateExam extends JFrame{
+public class CreateExam extends JFrame {
     private JPanel createExam;
     private JTextField examNameField;
     private JTextPane examDescriptionField;
-    private JTextField examDateField;
     private JTextField examWeightField;
     private JTextField examTotalField;
     private JComboBox modules;
     private JButton submitButton;
     private JButton returnToAdminDashboardButton;
+    private JXDatePicker datePicker;
+    private JLabel examDate;
     private JFrame createExamFrame;
 
 
@@ -38,12 +41,11 @@ public class CreateExam extends JFrame{
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 
 
-    public CreateExam(User user){
+    public CreateExam(User user) {
         createExamFrame = new JFrame("Create Exam");
         createExamFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         createExamFrame.setPreferredSize(new Dimension(500, 400));
         createExamFrame.setResizable(false);
-
         createExamFrame.add(createExam);
         createExamFrame.pack();
         createExamFrame.setLocationRelativeTo(null);
@@ -76,12 +78,21 @@ public class CreateExam extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 exam.setName(examNameField.getText());
-                LocalDate localDate = LocalDate.parse(examDateField.getText(),formatter);
+
+                LocalDate localDate = datePicker.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 exam.setDate(localDate);
                 exam.setDescription(examDescriptionField.getText());
-                exam.setWeight(Integer.parseInt(examWeightField.getText()));
-                exam.setTotal(Integer.parseInt(examTotalField.getText()));
-                exam.setModule(module);
+                if (!examWeightField.getText().equals("")) {
+                    exam.setWeight(Integer.parseInt(examWeightField.getText()));
+                }
+                if (!examTotalField.getText().equals("")) {
+                    exam.setTotal(Integer.parseInt(examTotalField.getText()));
+                }
+
+                if (module.getName() != null) {
+                    exam.setModule(module);
+                }
+
                 examDAO.updateOne(exam);
                 JOptionPane.showMessageDialog(null, "Exam created.");
                 createExamFrame.dispose();
@@ -90,6 +101,7 @@ public class CreateExam extends JFrame{
             }
         });
     }
+
     public static Module findByName(Collection<Module> modules, String name) {
         return modules.stream().filter(module -> name.equals(module.getName())).findFirst().orElse(null);
     }

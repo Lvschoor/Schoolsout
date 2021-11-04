@@ -5,15 +5,18 @@ import dao.ModuleDAO;
 import entities.Exam;
 import entities.Module;
 import entities.User;
+import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public class UpdateExam extends JFrame {
@@ -27,6 +30,7 @@ public class UpdateExam extends JFrame {
     private JButton submitChangesButton;
     private JButton returnToAdminDashboardButton;
     private JTextField examNameField;
+    private JXDatePicker datePicker;
     private JFrame updateExamFrame;
 
     ModuleDAO moduleDAO = new ModuleDAO();
@@ -67,8 +71,9 @@ public class UpdateExam extends JFrame {
                 exam = findExamByName(listOfExams, examName);
                 Exam examToUpdate = examDAO.getOne(exam.getId());
                 examNameField.setText(examName);
-                if (examToUpdate.getDate()!=null){ examDateField.setText(examToUpdate.getDate().format(formatter));}
-
+                if (examToUpdate.getDate()!=null){
+                    datePicker.setDate(Date.from(examToUpdate.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                }
                 examDescriptionField.setText(examToUpdate.getDescription());
                 examWeightField.setText(String.valueOf(examToUpdate.getWeight()));
                 examTotalField.setText(String.valueOf(examToUpdate.getTotal()));
@@ -77,7 +82,6 @@ public class UpdateExam extends JFrame {
 
             }
         });
-
 
         returnToAdminDashboardButton.addActionListener(new ActionListener() {
             @Override
@@ -99,12 +103,19 @@ public class UpdateExam extends JFrame {
 
                 examToUpdate.setName(examNameField.getText());
                 examToUpdate.setDescription(examDescriptionField.getText());
-                if (!examDateField.getText().equals("")){
-                    examToUpdate.setDate(LocalDate.parse(examDateField.getText(),formatter));}
+                LocalDate localDate = datePicker.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                examToUpdate.setDate(localDate);
+                if (!examWeightField.getText().equals("")){
+                    examToUpdate.setWeight(Integer.parseInt(examWeightField.getText()));
+                }
+                if (!examTotalField.getText().equals("")){
+                    examToUpdate.setTotal(Integer.parseInt(examTotalField.getText()));
+                }
 
-                examToUpdate.setWeight(Integer.parseInt(examWeightField.getText()));
-                examToUpdate.setTotal(Integer.parseInt(examWeightField.getText()));
-                examToUpdate.setModule(module);
+                if (module.getName() != null){
+                    examToUpdate.setModule(module);
+                }
+
                 examDAO.updateOne(examToUpdate);
 
                 JOptionPane.showMessageDialog(null, "Exam updated.");
