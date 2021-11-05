@@ -22,6 +22,10 @@ public class UserDetails extends JFrame {
     private ButtonGroup genderButtonGroup;
     private JFrame userDetailsFrame;
 
+    UserDAO userDAO = new UserDAO();
+    PersonDAO personDAO = new PersonDAO();
+    Person person;
+
     public UserDetails(User user) {
         userDetailsFrame = new JFrame("User details");
         userDetailsFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -37,9 +41,8 @@ public class UserDetails extends JFrame {
         femaleRadioButton.setActionCommand("Female");
         otherRadioButton.setActionCommand("Other");
 
-        UserDAO userDAO = new UserDAO();
-        PersonDAO personDAO = new PersonDAO();
-        if (user.getPerson()!= null){
+        person = personDAO.getOne(user.getPerson().getId());
+        if (user.getPerson().getFirstname() != null) {
 
             firstName.setText(userDAO.getOne(user.getLogin()).getPerson().getFirstname());
             lastName.setText(userDAO.getOne(user.getLogin()).getPerson().getFamilyname());
@@ -52,15 +55,10 @@ public class UserDetails extends JFrame {
         }
 
 
-
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
-                Person person = new Person();
-                if (user.getPerson()!= null){
-                    person = user.getPerson();
-                }
                 person.setFirstname(firstName.getText());
                 person.setFamilyname(lastName.getText());
                 if (maleRadioButton.isSelected()) {
@@ -70,16 +68,8 @@ public class UserDetails extends JFrame {
                 } else {
                     person.setGender(Gender.OTHER);
                 }
-
                 user.setPerson(person);
-
                 userDAO.updateOne(user);
-
-                System.out.println("#################################################");
-                System.out.println(user);
-                System.out.println(user.getPerson());
-                System.out.println(user.getPerson().getId());
-                System.out.println("#################################################");
 
                 userDetailsFrame.dispose();
                 new Dashboard(user);

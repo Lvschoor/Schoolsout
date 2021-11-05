@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -63,6 +64,7 @@ public class UpdateExam extends JFrame {
         for (Exam exam : listOfExams) {
             exams.addItem(exam.getName());
         }
+        datePicker.setFormats(new SimpleDateFormat("d.MM.yyyy"));
 
         exams.addActionListener(new ActionListener() {
             @Override

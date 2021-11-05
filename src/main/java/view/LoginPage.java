@@ -19,9 +19,6 @@ public class LoginPage extends JFrame {
     private JButton createUserButton;
     private JFrame loginFrame;
 
-
-
-
     public LoginPage() {
 
         loginFrame = new JFrame("Login");
@@ -44,7 +41,7 @@ public class LoginPage extends JFrame {
                     loginFrame.dispose();
                     UserDAO userDAO = new UserDAO();
                     User user = userDAO.getOne(userNameField.getText());
-                    if (user.getPerson()==null){
+                    if (user.getPerson().getFirstname()==null){
                         new UserDetails(user);
                     } else if(user.getLogin().equals("admin")){
                         new AdminDashboard(user);

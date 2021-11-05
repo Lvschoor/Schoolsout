@@ -1,6 +1,7 @@
 package view;
 
 import dao.UserDAO;
+import entities.Person;
 import entities.User;
 
 import javax.swing.*;
@@ -54,6 +55,7 @@ public class CreateUser extends JFrame {
                         user.setLogin(userNameField.getText());
                         user.setPasswordhash(String.valueOf(passwordField2.getPassword()));
                         user.setActive(true);
+                        user.setPerson(new Person());
                         userDAO.createOne(user);
                         createUserFrame.dispose();
                         new LoginPage();

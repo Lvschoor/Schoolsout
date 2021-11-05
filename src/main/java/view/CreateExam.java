@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -38,7 +39,6 @@ public class CreateExam extends JFrame {
     ModuleDAO moduleDAO = new ModuleDAO();
     Module module = new Module();
     List<Module> listOfModules = new ArrayList<>();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 
 
     public CreateExam(User user) {
@@ -55,6 +55,8 @@ public class CreateExam extends JFrame {
         for (Module module : listOfModules) {
             modules.addItem(module.getName());
         }
+
+        datePicker.setFormats(new SimpleDateFormat("d.MM.yyyy"));
 
         modules.addActionListener(new ActionListener() {
             @Override
