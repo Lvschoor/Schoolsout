@@ -1,6 +1,7 @@
 package entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 // class/entity Person according given UML
 
@@ -15,6 +16,8 @@ public class Person {
     private Gender gender;
     @ManyToOne(cascade = CascadeType.MERGE)
     private Course course;
+    @ManyToMany (cascade = CascadeType.MERGE)
+    private List<Course> courseHistory;
 
 
     public Person() {
@@ -64,6 +67,14 @@ public class Person {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public List<Course> getCourseHistory() {
+        return courseHistory;
+    }
+
+    public void setCourseHistory(List<Course> courseHistory) {
+        this.courseHistory = courseHistory;
     }
 
     @Override

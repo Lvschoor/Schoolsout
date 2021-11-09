@@ -2,8 +2,9 @@ package entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
-// class/entity Exam according given UML
+// class/entity Exam according given UML part 2
 
 @Entity
 public class Exam {
@@ -17,8 +18,14 @@ public class Exam {
     private LocalDate date;
     private int weight;
     private int total;
-    @ManyToOne (cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne
     private Module module;
+    @ManyToOne (cascade = {CascadeType.MERGE})
+    private Exam examGroup;
+    @OneToMany (mappedBy ="examGroup",cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    private List<Exam> subExams;
+
+
 
     public Exam() {
     }
@@ -82,4 +89,32 @@ public class Exam {
         this.module = module;
     }
 
+    public void setExamGroup(Exam examGroup) {
+        this.examGroup = examGroup;
+    }
+
+    public List<Exam> getSubExams() {
+        return subExams;
+    }
+
+    public void setSubExams(List<Exam> subExams) {
+        this.subExams = subExams;
+    }
+
+    public Exam getExamGroup() {
+        return examGroup;
+    }
+
+    @Override
+    public String toString() {
+        return "Exam{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                ", weight=" + weight +
+                ", total=" + total +
+                ", module=" + module  +
+                '}';
+    }
 }

@@ -14,9 +14,9 @@ public class Module {
     private String name;
     @Column(length = 2000)
     private String description;
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     private Course course;
-    @OneToMany(mappedBy = "module", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "module")
     private List<Exam> exams;
 
     public Module() {
@@ -71,8 +71,7 @@ public class Module {
         return "Module{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", exams=" + exams +
+                ", description='" + description + '\''  +
                 '}';
     }
 }

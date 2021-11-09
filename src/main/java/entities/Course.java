@@ -17,7 +17,7 @@ public class Course {
     private String code;
     private String imageURL;
     private boolean active;
-    @OneToMany(mappedBy = "course", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "course")
     private List<Module> modules;
 
     public Course() {

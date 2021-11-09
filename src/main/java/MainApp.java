@@ -1,5 +1,9 @@
 import dao.*;
+import entities.Grade;
+import services.ExamService;
 import view.LoginPage;
+
+import java.math.BigDecimal;
 
 public class MainApp {
 
@@ -10,6 +14,7 @@ public class MainApp {
         CourseDAO courseDAO = new CourseDAO();
         PersonDAO personDAO = new PersonDAO();
         UserDAO userDAO = new UserDAO();
+        GradeDAO gradeDAO = new GradeDAO();
 
 
         // Deleting old tables and creating a new database with test values
@@ -99,7 +104,22 @@ public class MainApp {
 
 
         try {
-            new LoginPage();
+            //new LoginPage();
+
+ /*         Grade grade1 = new Grade();
+
+            grade1.setGradeValue(BigDecimal.valueOf(9));
+            grade1.setExam(examDAO.getOne(90L));
+            grade1.setPerson(personDAO.getOne(23));
+
+            gradeDAO.createOne(grade1);
+
+*/
+            // calling ExamService method to check functioning of requested feature
+            ExamService es = new ExamService();
+            es.outputExam(12L);
+
+
         } catch (Exception e) {
             System.out.println("Something went wrong");
             e.printStackTrace();
@@ -110,4 +130,6 @@ public class MainApp {
 
 
     }
+
+
 }
