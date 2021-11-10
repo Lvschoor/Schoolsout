@@ -1,4 +1,4 @@
-package entities;
+package model;
 
 import services.AttributeEncryptor;
 
@@ -13,7 +13,7 @@ public class User {
     @Convert(converter = AttributeEncryptor.class) //calls AttributeEncryptor to encrypt or decrypt
     private String passwordhash;
     private boolean active;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL) // ALL to allow delete and update from user (GUI module)
     private Person person;
 
     public User() {

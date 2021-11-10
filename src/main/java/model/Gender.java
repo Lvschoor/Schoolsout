@@ -1,4 +1,4 @@
-package entities;
+package model;
 
 //enum used in Person class
 

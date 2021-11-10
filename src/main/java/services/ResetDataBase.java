@@ -2,8 +2,8 @@ package services;
 
 import dao.JDBCConnectionClass;
 import dao.*;
-import entities.*;
-import entities.Module;
+import model.*;
+import model.Module;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -69,11 +69,11 @@ public class ResetDataBase {
             courseDAO.createOne(course2);
             courseDAO.createOne(course3);
 
-            Module module1 = new entities.Module("JAVA");
-            Module module2 = new entities.Module("Python");
-            Module module3 = new entities.Module("HTML");
-            Module module4 = new entities.Module("CSS");
-            Module module5 = new entities.Module("GitHub");
+            Module module1 = new model.Module("JAVA");
+            Module module2 = new model.Module("Python");
+            Module module3 = new model.Module("HTML");
+            Module module4 = new model.Module("CSS");
+            Module module5 = new model.Module("GitHub");
 
             ModuleDAO moduleDAO = new ModuleDAO();
             moduleDAO.createOne(module1);

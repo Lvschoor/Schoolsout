@@ -1,4 +1,4 @@
-import entities.User;
+import model.User;
 import services.GradeService;
 import services.UserService;
 

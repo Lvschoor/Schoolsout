@@ -2,9 +2,9 @@ package view;
 
 import dao.ExamDAO;
 import dao.ModuleDAO;
-import entities.Exam;
-import entities.Module;
-import entities.User;
+import model.Exam;
+import model.Module;
+import model.User;
 import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;

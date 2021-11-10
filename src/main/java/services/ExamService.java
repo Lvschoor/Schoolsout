@@ -2,9 +2,10 @@ package services;
 
 import dao.ExamDAO;
 import dao.GradeDAO;
-import entities.Exam;
-import entities.Grade;
+import model.Exam;
+import model.Grade;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExamService {
@@ -12,7 +13,7 @@ public class ExamService {
     GradeDAO gradeDAO = new GradeDAO();
 
 
-// requested method from part 2 of School's out task
+    // requested method from part 2 of School's out task
     public void outputExam(Long id) {
         Exam exam = examDAO.getOne(id);
         printGradeIfExamHasNoSubExams(exam);
@@ -25,8 +26,8 @@ public class ExamService {
         // check of exam has sub exams;
         // if yes -> print it as a parent exam and go one step deeper in the hierarchy
         // if no -> find the grades related to this exam and print the out
-        if (exam.getSubExams().isEmpty() ) {
-            System.out.println(exam.getName()+" has following grades:");
+        if (exam.getSubExams().isEmpty()) {
+            System.out.println(exam.getName() + " has following grades:");
             for (Grade grade : listOfAllGrades) {
                 if (grade.getExam().getId().equals(exam.getId())) {
                     System.out.print(grade.getGradeValue() + "/" + exam.getTotal() + " ; ");
@@ -41,5 +42,16 @@ public class ExamService {
 
         }
 
+    }
+
+    public List<Exam> gradableExams() {
+        List<Exam> allExams = examDAO.getAll();
+        List<Exam> gradableExamList = new ArrayList<>();
+        for (Exam exam : allExams) {
+            if (exam.getSubExams().isEmpty()) {
+                gradableExamList.add(exam);
+            }
+        }
+        return gradableExamList;
     }
 }

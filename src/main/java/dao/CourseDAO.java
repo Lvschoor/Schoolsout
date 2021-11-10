@@ -1,6 +1,6 @@
 package dao;
 
-import entities.Course;
+import model.Course;
 
 import javax.persistence.EntityManager;
 import java.util.List;

@@ -1,7 +1,7 @@
 package services;
 
 import dao.UserDAO;
-import entities.User;
+import model.User;
 
 import java.io.Console;
 

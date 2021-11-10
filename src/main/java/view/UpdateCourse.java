@@ -1,8 +1,8 @@
 package view;
 
 import dao.CourseDAO;
-import entities.Course;
-import entities.User;
+import model.Course;
+import model.User;
 
 import javax.swing.*;
 import java.awt.*;

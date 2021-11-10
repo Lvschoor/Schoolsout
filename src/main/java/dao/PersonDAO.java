@@ -1,6 +1,6 @@
 package dao;
 
-import entities.Person;
+import model.Person;
 
 import javax.persistence.EntityManager;
 import java.util.List;

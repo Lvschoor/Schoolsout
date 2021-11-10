@@ -2,9 +2,9 @@ package view;
 
 import dao.PersonDAO;
 import dao.UserDAO;
-import entities.Gender;
-import entities.Person;
-import entities.User;
+import model.Gender;
+import model.Person;
+import model.User;
 
 import javax.swing.*;
 import java.awt.*;

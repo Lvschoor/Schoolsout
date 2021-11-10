@@ -2,9 +2,9 @@ package view;
 
 import dao.CourseDAO;
 import dao.ModuleDAO;
-import entities.Course;
-import entities.Module;
-import entities.User;
+import model.Course;
+import model.Module;
+import model.User;
 
 import javax.swing.*;
 import java.awt.*;

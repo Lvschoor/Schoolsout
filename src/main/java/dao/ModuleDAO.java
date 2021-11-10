@@ -1,6 +1,6 @@
 package dao;
 
-import entities.Module;
+import model.Module;
 
 import javax.persistence.EntityManager;
 import java.util.List;

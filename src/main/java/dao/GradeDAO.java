@@ -3,8 +3,7 @@ package dao;
 
 // methods that allow CRUD operations on Grade entity
 
-import entities.Exam;
-import entities.Grade;
+import model.Grade;
 
 import javax.persistence.EntityManager;
 import java.util.List;
