@@ -1,6 +1,7 @@
 import dao.*;
 import model.Grade;
 import services.ExamService;
+import view.LoginPage;
 
 import java.math.BigDecimal;
 
@@ -103,15 +104,15 @@ public class MainApp {
 
 
         try {
-            //new LoginPage();
+            new LoginPage();
 
-          Grade grade1 = new Grade();
+/*          Grade grade1 = new Grade();
 
             grade1.setGradeValue(BigDecimal.valueOf(6));
             grade1.setExam(examDAO.getOne(90L));
             grade1.setPerson(personDAO.getOne(18));
 
-            gradeDAO.createOne(grade1);
+            gradeDAO.createOne(grade1);*/
 
             // calling ExamService method to check functioning of requested feature
           /*  ExamService es = new ExamService();

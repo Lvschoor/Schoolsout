@@ -25,6 +25,7 @@ public class Dashboard extends JFrame {
     private JTextField lastNameField;
     private JButton confirmButton;
     private JButton exitButton;
+    private JLabel chooseCourseLabel;
     private JFrame dashboardFrame;
 
     public Dashboard(User user){
@@ -63,6 +64,8 @@ public class Dashboard extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 courses.setVisible(true);
+                chooseCourseLabel.setVisible(true);
+                courses.setSelectedIndex(0);
 
             }
         });
