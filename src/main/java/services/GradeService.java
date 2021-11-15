@@ -55,13 +55,13 @@ public class GradeService {
         grade.setDate(LocalDate.now());
         boolean correctGradeValue = false;
         BigDecimal gradeValue = null;
-        while (!correctGradeValue){
+        while (!correctGradeValue) {
             System.out.print("Give the grade: ");
             gradeValue = scanner.nextBigDecimal();
-            if (gradeValue.compareTo(BigDecimal.valueOf(0)) >=  0
-                    && gradeValue.compareTo(BigDecimal.valueOf(examToBeGraded.getTotal())) <= 0){
+            if (gradeValue.compareTo(BigDecimal.valueOf(0)) >= 0
+                    && gradeValue.compareTo(BigDecimal.valueOf(examToBeGraded.getTotal())) <= 0) {
                 grade.setGradeValue(gradeValue);
-                correctGradeValue=true;
+                correctGradeValue = true;
             }
         }
         grade.setGradeValue(gradeValue);
@@ -99,14 +99,15 @@ public class GradeService {
 
     //MEDIUM
     //Controleer eerst of de user niet 'null' is
-    //Gebruik een user.getPerson methode, en maak een extra methode in je DAO/repository om resultaten op te vragen met person
-    public void getAllGradeByPerson(User user) {
-
+    //Gebruik een user.getPerson methode,
+    //en maak een extra methode in je DAO/repository om resultaten op te vragen met person
+    public List<Grade> getAllGradeByPerson(User user) {
+        List<Grade> allGradesOfPerson = new ArrayList<>();
+        List<Grade> allGrades = gradeDAO.getAll();
         if (user != null) {
             int counter = 1;
             Person person = user.getPerson();
             String fullNameOfPerson = person.getFirstname() + " " + person.getFamilyname();
-            List<Grade> allGrades = gradeDAO.getAll();
             System.out.println("All grades for " + fullNameOfPerson + ":");
             if (!allGrades.isEmpty()) {
                 for (Grade grade : allGrades) {
@@ -115,15 +116,20 @@ public class GradeService {
                                 + "Exam: " + grade.getExam().getName() + " with grade: "
                                 + grade.getGradeValue() + "/"
                                 + grade.getExam().getTotal());
+                        allGradesOfPerson.add(grade);
                         counter++;
                     }
                 }
-            } else System.out.println("No grades found for " + fullNameOfPerson);
+                return allGradesOfPerson;
+            } else {
+                System.out.println("No grades found for " + fullNameOfPerson);
+            }
 
         } else {
             System.out.println("No valid user to delete grades; Please first use the 'See One' option from User menu.");
+            return null;
         }
-
+        return allGradesOfPerson;
     }
 
     //HARD
@@ -182,7 +188,7 @@ public class GradeService {
     public void deleteGrade(User user) {
 
         if (user != null) {
-            int counter = 1;
+            /*int counter = 1;
             Person person = user.getPerson();
             String fullNameOfPerson = person.getFirstname() + " " + person.getFamilyname();
             List<Grade> allGrades = gradeDAO.getAll();
@@ -200,10 +206,14 @@ public class GradeService {
                     }
                 }
             } else System.out.println("No grades found for " + fullNameOfPerson);
-
+*/
+            List<Grade> gradesOfPerson = getAllGradeByPerson(user);
+            Person person = user.getPerson();
+            String fullNameOfPerson = person.getFirstname() + " " + person.getFamilyname();
+            System.out.println("Choose the grade you want to delete of " + fullNameOfPerson);
             int choice = scanner.nextInt();
 
-            Grade gradeToBeDeleted = allGradesOfPerson.get(choice - 1);
+            Grade gradeToBeDeleted = gradesOfPerson.get(choice - 1);
             System.out.print("Confirm you want to delete this grade: Exam: "
                     + gradeToBeDeleted.getExam().getName() + " with grade: "
                     + gradeToBeDeleted.getGradeValue() + "/"

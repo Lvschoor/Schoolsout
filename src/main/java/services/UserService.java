@@ -6,6 +6,7 @@ import model.Gender;
 import model.Person;
 import model.User;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 
@@ -64,8 +65,13 @@ public class UserService {
         System.out.print("Enter the username: ");
         String username = scanner.next();
         User user = userDAO.getOne(username);
-        if (user != null) System.out.println(user);
-        else System.out.println("User does not exist");
+        if (user != null) {
+            System.out.println("User " + user.getLogin() + " details:");
+            System.out.println("Active: "+ user.isActive());
+            System.out.println("Name: " + user.getPerson().getFirstname() +" "+user.getPerson().getFamilyname());
+            System.out.println("Gender: "+user.getPerson().getGender());
+
+        } else System.out.println("User does not exist");
         return user;
     }
 

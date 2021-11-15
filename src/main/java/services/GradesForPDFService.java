@@ -36,7 +36,7 @@ public class GradesForPDFService {
             } else System.out.println("No grades found for " + fullNameOfPerson);
 
         } else {
-            System.out.println("No valid user to delete grades.");
+            System.out.println("No valid user to show grades.");
         }
         return gradesOfPerson;
     }
