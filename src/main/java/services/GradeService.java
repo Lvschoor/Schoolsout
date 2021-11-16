@@ -174,6 +174,8 @@ public class GradeService {
                 scanner.nextLine();
                 System.out.println("Give the new comment:");
                 gradeToBeUpdated.setComment(scanner.nextLine());
+                System.out.println("Give the new internal comment:");
+                gradeToBeUpdated.setInternalComment(scanner.nextLine());
                 gradeDAO.updateOne(gradeToBeUpdated);
             }
 
@@ -188,25 +190,7 @@ public class GradeService {
     public void deleteGrade(User user) {
 
         if (user != null) {
-            /*int counter = 1;
-            Person person = user.getPerson();
-            String fullNameOfPerson = person.getFirstname() + " " + person.getFamilyname();
-            List<Grade> allGrades = gradeDAO.getAll();
-            List<Grade> allGradesOfPerson = new ArrayList<>();
-            System.out.println("Choose the grade you want to delete of " + fullNameOfPerson);
-            if (!allGrades.isEmpty()) {
-                for (Grade grade : allGrades) {
-                    if (grade.getPerson().getId() == (person.getId())) {
-                        System.out.println(counter + ". "
-                                + "Exam: " + grade.getExam().getName() + " with grade: "
-                                + grade.getGradeValue() + "/"
-                                + grade.getExam().getTotal());
-                        allGradesOfPerson.add(grade);
-                        counter++;
-                    }
-                }
-            } else System.out.println("No grades found for " + fullNameOfPerson);
-*/
+
             List<Grade> gradesOfPerson = getAllGradeByPerson(user);
             Person person = user.getPerson();
             String fullNameOfPerson = person.getFirstname() + " " + person.getFamilyname();

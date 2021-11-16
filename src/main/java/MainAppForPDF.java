@@ -4,9 +4,10 @@ import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.property.HorizontalAlignment;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.VerticalAlignment;
 import model.Exam;
 import model.Grade;
@@ -16,9 +17,11 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 
@@ -63,23 +66,32 @@ public class MainAppForPDF {
                 table.setMarginBottom(15);
 
                 table.addCell(new Cell().add(img));
-                table.addCell(new Cell().add("Rouppeplein 16, 1000 Brussels, Belgium"));
+                table.addCell(new Cell().add("Rouppeplein 16, 1000 Brussels, Belgium")
+                        .setTextAlignment(TextAlignment.CENTER));
 
                 Table table2 = new Table(new float[]{2, 4});
                 table2.useAllAvailableWidth();
                 table2.setMarginBottom(15);
                 table2.setBackgroundColor(Color.LIGHT_GRAY);
+                table2.addCell(new Cell().add(titleOfPdf).setBold().setPadding(5));
+                table2.addCell((new Cell().add("JAVA IoT 21 Apr")).setPadding(5));
 
 
-                table2.addCell(new Cell().add(titleOfPdf));
-                table2.addCell((new Cell().add("JAVA IoT 21 Apr")));
-
-
-                Table table3 = new Table(new float[]{3, 1});
+                Table table3 = new Table(new float[]{3, 1, 1});
                 table3.useAllAvailableWidth();
+                table3.addCell(new Cell().add("Exam").setPadding(5));
+                table3.addCell(new Cell().add("Date")
+                        .setVerticalAlignment(VerticalAlignment.BOTTOM)
+                        .setTextAlignment(TextAlignment.CENTER)
+                        .setPadding(5));
+                table3.addCell(new Cell().add("Grade")
+                        .setTextAlignment(TextAlignment.RIGHT)
+                        .setVerticalAlignment(VerticalAlignment.BOTTOM)
+                        .setPadding(5));
 
 
                 String examName;
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 
                 for (Grade grade : grades) {
                     String indent = "-->";
@@ -90,11 +102,21 @@ public class MainAppForPDF {
                         examName = exam.getExamGroup().getName() + " /\n" + indent + examName;
                         exam = exam.getExamGroup();
                     }
-                    table3.addCell(new Cell().add(examName));
-                    Cell gradeCell = new Cell();
-                    gradeCell.setVerticalAlignment(VerticalAlignment.BOTTOM);
+                    table3.addCell(new Cell().add(examName).setPadding(5));
+                    table3.addCell(new Cell().add(grade.getDate().format(formatter))
+                            .setVerticalAlignment(VerticalAlignment.BOTTOM)
+                            .setTextAlignment(TextAlignment.CENTER)
+                            .setPadding(5));
+                    Cell gradeCell = new Cell()
+                            .setTextAlignment(TextAlignment.RIGHT)
+                            .setVerticalAlignment(VerticalAlignment.BOTTOM)
+                            .setPadding(5);
                     gradeCell.setBackgroundColor(Color.LIGHT_GRAY);
                     gradeCell.add(grade.getGradeValue() + "/" + grade.getExam().getTotal());
+                    if(grade.getGradeValue().compareTo(BigDecimal.valueOf(grade.getExam().getTotal()/2))<0){
+                        gradeCell.setFontColor(Color.RED);
+
+                    } else gradeCell.setFontColor(Color.BLACK);
                     table3.addCell(gradeCell);
                 }
                 document.add(table);
@@ -116,6 +138,8 @@ public class MainAppForPDF {
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+                System.out.println("Close the open pdf file of "+userName+" before trying again.");
+
             }
         } else System.out.println("No grades found for this user or user does not exists.");
     }

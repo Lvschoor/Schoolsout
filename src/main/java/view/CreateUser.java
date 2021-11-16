@@ -46,25 +46,35 @@ public class CreateUser extends JFrame {
                 if (userNameField.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Please enter username!");
                 } else {
-                    if (userDAO.getOne(userNameField.getText())!= null){
+                    if (userDAO.getOne(userNameField.getText()) != null) {
                         JOptionPane.showMessageDialog(null, "Username already exists!");
                     } else {
 
-                    if (String.valueOf(passwordField1.getPassword()).equals(String.valueOf(passwordField2.getPassword()))) {
+                        if (String.valueOf(passwordField1.getPassword())
+                                .matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$")){
+                            if (String.valueOf(passwordField1.getPassword()).equals(String.valueOf(passwordField2.getPassword()))) {
 
-                        user.setLogin(userNameField.getText());
-                        user.setPasswordhash(String.valueOf(passwordField2.getPassword()));
-                        user.setActive(true);
-                        user.setPerson(new Person());
-                        userDAO.createOne(user);
-                        createUserFrame.dispose();
-                        new LoginPage();
+                                user.setLogin(userNameField.getText());
+                                user.setPasswordhash(String.valueOf(passwordField2.getPassword()));
+                                user.setActive(true);
+                                user.setPerson(new Person());
+                                userDAO.createOne(user);
+                                createUserFrame.dispose();
+                                new LoginPage();
 
 
-                        JOptionPane.showMessageDialog(null, "New user created.");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Passwords don't match!!");
-                    }}
+                                JOptionPane.showMessageDialog(null, "New user created.");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Passwords don't match!!");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Password should be " +
+                                    "at least 8 characters and contain one uppercase, one lowercase, " +
+                                    "one digit and one special character");
+                        }
+
+
+                    }
                 }
 
 
